@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParse = require('body-parser');
 
 const {mongoose} = require('./DB/mongoose');
-const {User} = require('./models/user';
+const {User} = require('./models/user');
 const {Todo} = require('./models/todo');
 const {ObjectID} = require('mongodb');
 
