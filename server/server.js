@@ -9,6 +9,8 @@ const {ObjectID} = require('mongodb');
 
 const app = express();
 
+const port = process.env.PORT || 3000; // set PORT on heroku
+
 app.use(bodyParse.json());
 
 app.post('/todos', (req, res) => {
@@ -56,8 +58,8 @@ app.get('/todos/:id', (req, res) => {
 });  // create id variable
 
 
-app.listen(3000, () => {
-  console.log('SERVER STARTED');
+app.listen(port, () => {
+  console.log(`Started ${port}`);
 });
 
 
