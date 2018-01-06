@@ -75,46 +75,32 @@ app.delete('/todos/:id', (req, res) => {
       res.send(todo);
     });
   }
+});
 
 app.patch('/todos/:id', (req, res) => {
-  const id = req.params.id;
-  let body = _.pick(req.body, ['text', 'completed']);
-  if (ObjectID.isValid(id) === false) {
-    res.status(404).send();
-  }
-
-  if (_.isBoolean(body.completed) && body.completed) {
-    body.completedAt = new Date().getTime();
-  } else {
-    body.completed = false;
-    body.completedAt = null;
-  }
-
-  console.log('id', id);
-  Todo.findByIdAndUpdate(id, {
-    $set: body
-  }, { new: true }).then( todo => {
-    if (!todo) {
-      return res.status(4).send();
+    const id = req.params.id;
+    let body = _.pick(req.body, ['text', 'completed']);
+    if (ObjectID.isValid(id) === false) {
+      res.status(404).send();
     }
 
-    res.send({todo});
+    if (_.isBoolean(body.completed) && body.completed) {
+      body.completedAt = new Date().getTime();
+    } else {
+      body.completed = false;
+      body.completedAt = null;
+    }
 
-  })
+    Todo.findByIdAndUpdate(id, {$set: body}, {new: true}).then(todo => {
+      if (!todo) {
+        return res.status(404);
+      }
+      res.status({todo});
+    })
+  }
+);
 
-});
-
-
-  // remove todo by id
-
-  // success or
-  // if no doc, send 404
-  // // error (400)
-
-});
 
 app.listen(port, () => {
   console.log("Started");
 });
-
-
