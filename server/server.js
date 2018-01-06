@@ -58,6 +58,31 @@ app.get('/todos/:id', (req, res) => {
 });  // create id variable
 
 
+app.delete('/todos/:id', (req, res) => {
+  // get id
+  console.log('hi id')
+  const id = req.params.id;
+  console.log('id', id);
+  // validdate id
+  if (ObjectID.isValid(id) === false) {
+    res.status(404).send();
+  } else {
+    Todo.findByIdAndRemove(id).then((todo) => {
+      if (!todo) {
+        res.status(400).send();
+      }
+      res.send(todo);
+    });
+  }
+
+  // remove todo by id
+
+  // success or
+  // if no doc, send 404
+  // // error (400)
+
+});
+
 app.listen(port, () => {
   console.log("Started");
 });
