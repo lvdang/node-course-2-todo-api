@@ -8,6 +8,7 @@ const {mongoose} = require('./DB/mongoose');
 const {User} = require('./models/user');
 const {Todo} = require('./models/todo');
 const {ObjectID} = require('mongodb');
+const {authenticate} = require('./middleware/authenticate');
 
 const app = express();
 
@@ -114,6 +115,12 @@ app.patch('/todos/:id', (req, res) => {
     })
   }
 );
+
+
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
+});
+
 
 
 app.listen(port, () => {
