@@ -43,6 +43,16 @@ app.post('/users', (req, res) => {
 
 });
 
+app.post('/users/login', (req, res) => {
+  const data = _.pick(req.body, ['email', 'password']);
+  User.findByCredentials(data.email, data.password).then( user => {
+    return user.generateAuthToken().then(token => {
+      res.header('x-auth', token).send(user);
+    });
+  }).catch(e => {
+    res.status(404).send();
+   });
+});
 
 app.get('/todos', (req, res) => {
   Todo.find().then( (todos) => {
