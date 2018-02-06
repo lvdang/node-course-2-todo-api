@@ -92,6 +92,17 @@ UserSchemas.statics.findByToken = function(token) {
 
 };
 
+UserSchemas.methods.removeToken = function(token) {
+  var user = this;
+
+  return user.update({
+    $pull: { // mongdo db pull
+      tokens: {
+        token
+      }
+    }
+  });
+};
 
 UserSchemas.pre('save', function (next) {
   const user = this;
